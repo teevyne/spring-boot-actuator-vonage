@@ -7,28 +7,31 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.Base64;
 
 @Service
-public class EmailService {
+public class MessagingService {
 
-    private static final String API_URL = "https://rest.email.nexmo.com/email/json";
+    private static final String API_URL = "https://messages-sandbox.nexmo.com/v0.1/messages";
     private static final String API_KEY = "YOUR_API_KEY";
     private static final String API_SECRET = "YOUR_API_SECRET";
 
-    public static void sendEmail(String from, String to, String subject, String text) throws IOException {
+    public static void sendWhatsApp(String to, String text) throws IOException {
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost request = new HttpPost(API_URL);
         request.setHeader("Content-Type", "application/json");
-        request.setHeader("Authorization", "Bearer " + API_KEY + ":" + API_SECRET);
+        request.setHeader("Authorization", "Basic " + Base64.getEncoder().encodeToString((API_KEY + ":" + API_SECRET).getBytes()));
 
-        StringEntity requestBody = new StringEntity("{"
-                + "\"from\":\"" + from + "\","
-                + "\"to\":[\"" + to + "\"],"
-                + "\"subject\":\"" + subject + "\","
-                + "\"text\":\"" + text + "\""
-                + "}");
-        request.setEntity(requestBody);
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("to", to);
+        requestBody.put("channel", "whatsapp");
+        requestBody.put("messages", new JSONObject().put("content", new JSONObject().put("type", "text").put("text", text)));
+
+        StringEntity requestEntity = new StringEntity(requestBody.toString());
+        request.setEntity(requestEntity);
 
         HttpResponse response = httpClient.execute(request);
         int statusCode = response.getStatusLine().getStatusCode();
@@ -36,9 +39,9 @@ public class EmailService {
         if (statusCode == 200) {
             HttpEntity responseEntity = response.getEntity();
 //            String responseString = Entity.toString(responseEntity, "UTF-8");
-//            System.out.println("Email sent successfully: " + responseString);
+//            System.out.println("WhatsApp message sent successfully: " + responseString);
         } else {
-            System.out.println("Error sending email: " + statusCode);
+            System.out.println("Error sending WhatsApp message: " + statusCode);
         }
     }
 }
