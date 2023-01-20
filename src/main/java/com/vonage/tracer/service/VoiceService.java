@@ -20,11 +20,15 @@ public class VoiceService {
     private static final String API_KEY = "YOUR_API_KEY";
     private static final String API_SECRET = "YOUR_API_SECRET";
 
-    public static void sendVoiceMessage(String to, String message) throws IOException {
+    public void sendVoiceMessage(String to, String message) throws IOException {
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost request = new HttpPost(API_URL);
         request.setHeader("Content-Type", "application/json");
-        request.setHeader("Authorization", "Basic " + Base64.getEncoder().encodeToString((API_KEY + ":" + API_SECRET).getBytes(StandardCharsets.UTF_8)));
+        request.setHeader(
+                "Authorization",
+                "Basic " + Base64.getEncoder()
+                        .encodeToString((API_KEY + ":" + API_SECRET)
+                                .getBytes(StandardCharsets.UTF_8)));
 
         JSONObject requestBody = new JSONObject();
         requestBody.put("to", new JSONObject().put("type", "phone").put("number", to));

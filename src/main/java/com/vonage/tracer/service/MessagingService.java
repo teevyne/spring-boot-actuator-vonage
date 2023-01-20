@@ -19,7 +19,7 @@ public class MessagingService {
     private static final String API_KEY = "YOUR_API_KEY";
     private static final String API_SECRET = "YOUR_API_SECRET";
 
-    public static void sendWhatsApp(String to, String text) throws IOException {
+    public void sendWhatsApp(String to, String text) throws IOException {
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost request = new HttpPost(API_URL);
         request.setHeader("Content-Type", "application/json");
