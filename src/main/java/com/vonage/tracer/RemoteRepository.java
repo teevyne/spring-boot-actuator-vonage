@@ -1,6 +1,5 @@
 package com.vonage.tracer;
 
-import com.vonage.tracer.service.EmailService;
 import com.vonage.tracer.service.MessagingService;
 import com.vonage.tracer.service.SmsService;
 import com.vonage.tracer.service.VoiceService;
@@ -9,19 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.trace.http.HttpTrace;
 import org.springframework.boot.actuate.trace.http.HttpTraceRepository;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
 @Getter
 @Setter
-//@RequiredArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
 public class RemoteRepository implements HttpTraceRepository {
-
-    @Autowired
-    private EmailService emailService;
 
     @Autowired
     private SmsService smsService;
@@ -45,13 +39,7 @@ public class RemoteRepository implements HttpTraceRepository {
 
         if (responseStatusCode == 500) {
 
-            // call the services to send Email, SMS, Messaging and Voice Messages via Vonage API
-
-            emailService.sendEmail(
-                    "<your-email-here>",
-                    "recipient-mail-here",
-                    "Check Server - 500 generated",
-                    "Kindly check the server for an Internal Server Error");
+            // call the services to send SMS, Messaging and Voice Messages via Vonage API
 
             smsService.sendSms(
                     "<sender-number-here",
@@ -59,6 +47,15 @@ public class RemoteRepository implements HttpTraceRepository {
                     "Check Server - 500 generated. Kindly check the server for an Internal Server Error");
 
             messagingService.sendWhatsApp(
+                    "<recipient-number-here",
+                    "Check Server - 500 generated. Kindly check the server for an Internal Server Error");
+
+            messagingService.sendFacebook(
+                    "<recipient-number-here",
+                    "Check Server - 500 generated. Kindly check the server for an Internal Server Error"
+            );
+
+            messagingService.sendViber(
                     "<recipient-number-here",
                     "Check Server - 500 generated. Kindly check the server for an Internal Server Error");
 
