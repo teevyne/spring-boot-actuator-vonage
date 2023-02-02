@@ -1,7 +1,6 @@
 package com.vonage.tracer;
 
 import com.vonage.tracer.service.MessagingService;
-import com.vonage.tracer.service.SmsService;
 import com.vonage.tracer.service.VoiceService;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RemoteRepository implements HttpTraceRepository {
-
-    @Autowired
-    private SmsService smsService;
-
     @Autowired
     private MessagingService messagingService;
 
