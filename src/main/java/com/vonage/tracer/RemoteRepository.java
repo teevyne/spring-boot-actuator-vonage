@@ -41,21 +41,16 @@ public class RemoteRepository implements HttpTraceRepository {
 
             // call the services to send SMS, Messaging and Voice Messages via Vonage API
 
-            smsService.sendSms(
+            MessagingService.sendSms(
                     "<sender-number-here",
                     "<recipient-number-here",
                     "Check Server - 500 generated. Kindly check the server for an Internal Server Error");
 
-            messagingService.sendWhatsApp(
+            MessagingService.sendWhatsApp(
                     "<recipient-number-here",
                     "Check Server - 500 generated. Kindly check the server for an Internal Server Error");
 
-            messagingService.sendFacebook(
-                    "<recipient-number-here",
-                    "Check Server - 500 generated. Kindly check the server for an Internal Server Error"
-            );
-
-            messagingService.sendViber(
+            MessagingService.sendViber(
                     "<recipient-number-here",
                     "Check Server - 500 generated. Kindly check the server for an Internal Server Error");
 
