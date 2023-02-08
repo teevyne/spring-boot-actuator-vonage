@@ -44,8 +44,6 @@ public class VoiceService {
 
         if (statusCode == 200) {
             HttpEntity responseEntity = response.getEntity();
-//            String responseString = Entity.toString(responseEntity, "UTF-8");
-//            System.out.println("Voice message sent successfully: " + responseString);
         } else {
             System.out.println("Error sending voice message: " + statusCode);
         }

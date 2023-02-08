@@ -38,8 +38,8 @@ public class RemoteRepository implements HttpTraceRepository {
 
             MessagingService.sendSms(
                     "<sender-number-here",
-                    "<recipient-number-here",
-                    "Check Server - 500 generated. Kindly check the server for an Internal Server Error");
+                    "<recipient-number-here"
+            );
 
             MessagingService.sendWhatsApp(
                     "<recipient-number-here",
