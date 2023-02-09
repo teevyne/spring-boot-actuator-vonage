@@ -31,6 +31,7 @@ public class RemoteRepository implements HttpTraceRepository {
     public void add(HttpTrace trace) {
 
         int responseStatusCode = trace.getResponse().getStatus();
+        String errorMessage = "Check Server - 500 generated. Kindly check the server for an Internal Server Error";
 
         if (responseStatusCode == 500) {
 
@@ -42,16 +43,14 @@ public class RemoteRepository implements HttpTraceRepository {
             );
 
             MessagingService.sendWhatsApp(
-                    "<recipient-number-here",
-                    "Check Server - 500 generated. Kindly check the server for an Internal Server Error");
+                    "<recipient-number-here", errorMessage
+                    );
 
             MessagingService.sendViber(
-                    "<recipient-number-here",
-                    "Check Server - 500 generated. Kindly check the server for an Internal Server Error");
+                    "<recipient-number-here", errorMessage);
 
             voiceService.sendVoiceMessage(
-                    "<recipient-here",
-                    "Check Server - 500 generated. Kindly check the server for an Internal Server Error");
+                    "<recipient-here", errorMessage);
 
         }
     }
